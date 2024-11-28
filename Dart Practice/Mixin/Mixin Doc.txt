@@ -1,0 +1,266 @@
+code 1:
+mixin class Parent {
+  int x = 10;
+  static int y = 199;
+  void printData() {
+    print(x);
+    print(y);
+  }
+}
+
+class Child with Parent {
+  static int y = 200;
+  int x = 38;
+  void printData() {
+    print(super.x);
+    super.printData();
+  }
+}
+
+void main() {
+  Child obj = new Child();
+  obj.printData();
+}
+
+
+
+
+code 2 :
+mixin class Parent {
+  int x = 10;
+  static int y = 199;
+  void printData() {
+    print(x);
+    print(y);
+  }
+}
+
+class Child implements Parent {
+  int x = 38;
+  void printData() {
+    print("Hii");
+  }
+}
+
+void main() {
+  Child obj = new Child();
+  obj.printData();
+}
+
+
+
+
+code 3 :
+mixin class Parent {
+  Parent() {}
+  int x = 10;
+  static int y = 199;
+  void fun() {
+    print(x);
+    print(y);
+  }
+}
+
+class Child extends Parent {
+  int x = 38;
+  void gun() {
+    print(super.x);
+    super.fun();
+  }
+}
+
+void main() {
+  Child obj = new Child();
+  obj.gun();
+}
+
+/*Error: Can't use 'Parent' as a mixin because it has constructors.
+  Parent() {}
+  We can't create object of mixins even if we wrote it as mixin class
+Mixin gave constructor by it's own to initialize variables but refuse 
+us to write it by our own */
+
+
+
+code 4 :
+mixin Test {
+  int x = 20;
+  void demo() {
+    print("In Test Demo");
+  }
+
+  void fun2();
+}
+
+class Test2 with Test {
+  void demo() {
+    print("id test2 demo");
+    super.demo();
+  }
+
+  void fun2() {
+    print("in fun2");
+  }
+}
+
+void main() {
+  Test2 obj = new Test2();
+  obj.demo();
+}
+/* */
+
+
+
+code 5 :
+mixin Test {
+  void demo() {
+    print("In Test demo");
+  }
+}
+mixin Test2 {
+  void demo() {
+    print("In test2 demo");
+  }
+}
+
+class Test3 with Test, Test2 {
+  void demo() {
+    print("Id test3 demo");
+    super.demo();
+  }
+
+  void fun2() {
+    print("In fun2");
+  }
+}
+
+void main() {
+  Test3 obj = Test3();
+  obj.demo();
+}
+/**right side will be called by super.demo() so Test2 demo will be called */
+
+
+
+
+
+code 6 :
+class Demo2 {
+  Demo2() {
+    print("in demo2");
+  }
+}
+
+mixin Demo on Demo2 {
+  void fun() {
+    print("In fun");
+  }
+}
+
+class Test extends Demo2 with Demo {
+  Test() {
+    print("In test");
+  }
+}
+
+void main() {
+  Test obj = Test();
+}
+/*As we have written extends Demo2 here no error and it will call parent 
+constructor first due to Demo2() line present inside Test class , if we didn't write
+extends Demo2 by default there will be extends object with Demo and as we know 
+Demo class is bindded with Demo2 as we have done mixin Demo on Demo2 so Demo 
+can't be used to do with with other class it is possible in this code due to extends
+keyword */
+
+
+
+code 7 :
+class Demo2 {
+  Demo2() {
+    print("In demo2");
+  }
+  void fun() {
+    print("IN fun Demo2");
+  }
+}
+
+mixin Demo on Demo2 {
+  void fun() {
+    print("In fun Demo");
+  }
+}
+
+class Test extends Demo2 with Demo {
+  Test() {
+    print("In test");
+  }
+}
+
+void main() {
+  Test obj = new Test();
+  obj.fun();
+}
+/*by using on keyword only abstract methods will come any method will come 
+as abstract so it is must to give body to it  */
+
+
+
+code 8 :
+mixin Demo {
+  int x = 10;
+  void fun() {
+    print(x);
+  }
+}
+
+class Demo2 {
+  int x;
+  Demo2(this.x);
+}
+
+class Test extends Demo2 with Demo {
+  int x = 66;
+  Test() : super(7);
+  void fun() {
+    print(super.x);
+    super.fun();
+  }
+}
+
+void main() {
+  Demo obj = new Test();
+  obj.fun();
+}
+
+
+
+
+
+code 9 :
+mixin Demo2 {
+  void fun2() {
+    print("IN demo2 fun");
+  }
+}
+mixin Demo on Demo2 {
+  void gun() {
+    print("In demo gun");
+  }
+}
+
+class Test3 with Demo2 {}
+
+void main() {
+  Test3 obj = new Test3();
+  obj.fun2();
+  obj.gun();
+}
+
+/*Error: The method 'gun' isn't defined for the class 'Test3'.
+ - 'Test3' is from 'program9.dart'.
+Try correcting the name to the name of an existing method, or defining a method named 'gun'.
+  obj.gun();
+      ^^^
+class Test3 with Demo2 means Demo2 should have fun() and gun()
+as gun() method is not present error occured */

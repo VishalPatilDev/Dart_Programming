@@ -1,0 +1,279 @@
+code 1:
+class Test {
+  int x = 10;
+  Test(this.x);
+}
+
+class Test2 extends Test {
+  Test2(super.x);
+}
+
+void main() {
+  Test2 obj = Test2(10);
+  Test obj2 = Test(30);
+  obj.x = 19;
+  print(obj.x);
+  print(obj2.x);
+}
+//output: obj.x = 19
+        //obj2.x = 30
+
+
+code 2:
+class Test {
+  int x = 30;
+}
+
+class Test2 extends Test {
+  int x;
+  Test2(this.x);
+  void gun() {
+    this.x = 8;
+  }
+
+  void fun() {
+    print(this.x);
+    print(super.x);
+  }
+}
+
+void main() {
+  Test2 obj = Test2(10);
+  obj.gun();
+  obj.fun();
+}
+
+/*
+8
+30
+*/
+
+
+
+code 3:
+class Test {
+  int x = 30;
+  int y = 30;
+}
+
+class Test2 extends Test {
+  int x;
+  Test2(this.x);
+  void gun() {
+    this.x = 8;
+    this.y = 19;
+  }
+
+  void fun() {
+    print(super.x);
+    print(super.y);
+  }
+}
+
+
+void main() {
+  Test2 obj = Test2(10);
+  obj.gun();
+  obj.fun();
+}
+
+//output:30
+//19
+
+code 4:
+class Test {
+  int x;
+  int? y;
+  Test({required this.x, this.y});
+}
+
+class Test2 extends Test {
+  Test2(int x, int y) : super(x: 88) {
+    print(x);
+  }
+  void fun() {
+    print(this.x);
+    print(super.x);
+  }
+}
+
+void main() {
+  Test2 obj = Test2(19, 20);
+  obj.fun();
+}
+/*
+output:
+19
+88
+88
+*/
+
+code 5:
+class Test {
+  int x = 20;
+  String str = "Core2Web";
+  void parentMethod() {
+    print(x);
+    print(str);
+  }
+}
+
+class Test2 extends Test {
+  int x = 10;
+  String str = "Incubator";
+  void childMethod() {
+    print(x);
+    print(str);
+  }
+}
+
+void main() {
+  Test2 obj = new Test2();
+  obj.parentMethod();
+  obj.childMethod();
+}
+
+/*
+10
+Incubator
+10
+Incubator*/ 
+
+
+code 6:
+class Test {
+  int? x;
+  Test(this.x) {
+    print("In Test");
+  }
+}
+
+class Test2 extends Test {
+  int? y;
+  Test2(this.y, int x) : super(x);
+}
+
+class Test3 extends Test2 {
+  int? z;
+  Test3(this.z, int y, int x) : super(y, x) {
+    print("In test3");
+  }
+}
+
+void main() {
+  Test3 obj = Test3(10, 20, 30);
+}
+
+/*In Test
+In test3 */
+
+
+
+code 7:
+class Demo1 {
+  int x;
+  Demo1(this.x);
+}
+
+class Demo2 extends Demo1 {
+  Demo2(super.x);
+  void fun() {
+    print(x);
+  }
+}
+
+void main() {
+  //Demo obj1  = Demo2();
+  Demo1 obj2 = Demo2(10);
+  obj2.fun();
+}
+/*Error: The method 'fun' isn't defined for the class 'Demo1'.
+ - 'Demo1' is from 'program7.dart'.
+Try correcting the name to the name of an existing method, or defining a method named 'fun'.
+  obj2.fun();
+  
+  at compile time Demo1 side will be checked so there is no any method called fun() in demo try correcting it with Demo2 obj */
+
+
+
+
+code 8:
+class Parent {
+  Parent() {
+    print("In Parent Constructor");
+  }
+  //void call(){
+  //}
+}
+
+class Child extends Parent {
+  Child() {
+    super();
+    print("In Child Constructor");
+  }
+}
+
+void main() {
+  Child obj = new Child();
+}
+/*
+Error: Superclass has no method named 'call'.
+    super();
+    ^^^^
+    call method should be written to use super() in child class 
+super is used to make object callable it find for call method in parent class so we 
+have to write it by own */
+
+
+
+code 9:
+class Test {
+  int? x;
+  static int y = 20;
+  Test.intX(this.x);
+  static void changeY() {
+    y = 30;
+  }
+}
+
+class Test2 extends Test {
+  Test2(int x) : super.intX(x);
+}
+
+void main() {
+  Test obj = Test2(40);
+  Test2.changeY();
+  print(Test2.y);
+}
+/**Error: Member not found: 'Test2.changeY'.
+  Test2.changeY();
+        ^^^^^^^
+        
+  Static methods or static variables don't come in child class no inheritance in there 
+  so error occured */
+
+
+
+  code 10:
+  abstract class Demo1 {
+  factory Demo1() {
+    return Demo2();
+  }
+}
+
+class Demo2 implements Demo1 {
+  Demo2() {
+    print("Demo2");
+  }
+}
+
+void main() {
+  Demo1 obj = new Demo1();
+}
+
+/**
+ * output:Demo2
+ As factory constructor is used to return obj of same class or object of the child class
+ no error
+ */
+

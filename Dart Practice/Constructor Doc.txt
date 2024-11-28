@@ -1,0 +1,193 @@
+//code 1
+class Test {
+  final int x;
+  final int y;
+  const Test(this.x,this.y){
+    print("In const constructor");
+  }
+}
+void main(){
+  Test obj  = Test(10,20);
+  print(obj.x);
+}
+output: constant contructor can't have body try removing either const keyword or try removing body
+
+
+//code 2 :
+class Employee {
+  int? empid;
+  String? empName;
+  Employee() {}
+  Employee(int empid, String empName) {}
+}
+
+void main() {
+  Employee obj = new Employee();
+}
+output:Error: Can't use 'Employee' because it is declared more than once.
+
+code 3:
+class Demo {
+  final int? x;
+  final String? str;
+  const Demo(this.x, this.str);
+}
+
+void main() {
+  Demo obj1 = const Demo(10, "Core2Web");
+  print(obj1.hashCode);
+  Demo obj2 = const Demo(10, "Biencaps");
+  print(obj2.hashCode);
+}
+output: if the parameters of const objs same then same addresses would be printed but here parameters are different so different addresses are printed
+
+//code 4:
+class Company {
+  int empCount;
+  String compName;
+  Company(this.empCount, [this.compName = "Biencaps"]);
+  void compInfo() {
+    print(empCount);
+    print(compName);
+  }
+}
+
+void main() {
+  Company obj1 = new Company(100);
+  Company obj2 = new Company(200, "Pubmatic");
+  obj1.compInfo();
+  obj2.compInfo();
+}
+output:[] means optional parametes if we gave the parameter it will take it otherwise it will use the given optional parameter
+
+code 5:
+class Company {
+  int? x;
+  String? str;
+  Company(this.x, {this.str = "Core2Web"});
+  void compInfo() {
+    print(x);
+    print(str);
+  }
+}
+
+void main() {
+  Company obj1 = new Company(100);
+  Company obj2 = new Company(200, "Incubator");
+  obj1.compInfo();
+  obj2.compInfo();
+}
+output:Error: {} means default parameters if we try to change it it will give us error 
+Context: Found this candidate, but the arguments don't match.
+  Company(this.x, {this.str = "Core2Web"});
+  ^^^^^^^
+
+
+code 6:
+class Company {
+  int? empCount;
+  String compName;
+  Company({this.empCount, this.compName = "Deloitte"});
+  void compInfo() {
+    print(empCount);
+    print(compName);
+  }
+}
+
+void main() {
+  Company obj1 = new Company(empCount: 100, compName: "Veritas");
+  Company obj2 = new Company(compName: "Pubmatic", empCount: 200);
+  obj1.compInfo();
+  obj2.compInfo();
+}
+output:here named parameters are used for named parameters we should 
+give {} for constructor parameters so we can alternate the data while 
+passing it from object.
+
+
+code 7:
+class Point {
+  int x;
+  int y;
+}
+
+void main() {
+  Point obj = Point();
+}
+output: Error: Field 'x' should be initialized because its type 'int' doesn't allow null.
+Error: Field 'y' should be initialized because its type 'int' doesn't allow null.
+we should initiate the variables x and y or we can use ? symbol it will take null value if not given any value or value can be given to it.
+
+code 8:
+class Player {
+  int? jerNo;
+  String? pName;
+  const Player(this.jerNo, this.pName);
+}
+
+void main() {
+  Player obj = const (45, "Rohit");
+}
+output: jerNo and pName should be final here because we are doing constructor as constant
+
+code 9:
+int a = 10;
+
+class Test {
+  int x = 20;
+  int y = 20;
+  static num z = 30;
+  Test(this.x, this.y, this.a);
+  void fun() {
+    print(a);
+    print(x);
+    print(y);
+  }
+}
+
+void main() {
+  Test obj = Test(10, 30, 40);
+  obj.fun();
+}
+output:Error: 'a' isn't an instance field of this class.
+  Test(this.x, this.y, this.a);
+Error: global var a is not initialized in Test constructor so it can't be used in Test class constructor by doing this.a
+
+
+code 10:
+class Demo {
+  Demo() {
+    print("In demo");
+  }
+  factory Demo() {
+    print("In demo factory");
+    return Demo();
+  }
+}
+
+void main() {
+  Demo obj = new Demo();
+}
+output: Error: Can't use 'Demo' because it is declared more than once.
+  Demo obj = new Demo();
+  error: we can't give same names to constructors one of the constructor should have named constructor
+for example we can five the constructor Demo name as Demo._private and we can return it's obj from factory constructor
+
+
+
+code 11:
+class Test {
+  Test._private() {
+    print("In Demo");
+  }
+  factory Test() {
+    print("In demo factory");
+    return Test._private();
+  }
+}
+
+void main() {
+  Test obj = new Test();
+}
+output:factory constructor is used for returning private constructor obj in other class it can also return child's object.
+constructor don't have return type but factory constructor's speciality is it can return that it has a return type
